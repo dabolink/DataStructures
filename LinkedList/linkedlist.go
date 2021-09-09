@@ -62,19 +62,23 @@ func (ll *linkedList) Remove(index int) error {
 	if index < 0 || index >= ll.Length() {
 		return ErrOutOfBounds
 	}
-	defer func() { ll.size -= 1 }()
+
 	if ll.size == 1 {
 		ll.root = nil
+		ll.size -= 1
 		return nil
 	}
 	currentNode := ll.root
 	i := 0
-	for currentNode.next.next != nil && i < ll.Length() {
+	for currentNode.next.next != nil {
 		currentNode = currentNode.next
 		i += 1
 	}
 
+	//node before the one to remove
+	//set to point at 'node' after current one (will be nil if no nodes after)
 	currentNode.next = currentNode.next.next
+	ll.size -= 1
 	return nil
 }
 

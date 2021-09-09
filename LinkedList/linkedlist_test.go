@@ -38,6 +38,11 @@ func Test_linkedList_Get(t *testing.T) {
 	if err != ErrOutOfBounds {
 		t.Errorf("err should 'ErrOutOfBounds' is %v", err)
 	}
+
+	_, err = ll.Get(-1)
+	if err != ErrOutOfBounds {
+		t.Errorf("err should 'ErrOutOfBounds' is %v", err)
+	}
 	// add root
 	ll.Add("0")
 	val, err := ll.Get(0)
@@ -61,6 +66,14 @@ func Test_linkedList_Get(t *testing.T) {
 func Test_linkedList_Remove(t *testing.T) {
 	ll := New()
 	err := ll.Remove(0)
+	if err == nil {
+		t.Errorf("err should be ErrOutOfBounds is %v", err)
+	}
+	if ll.size != 0 {
+		t.Errorf("size should be 0 is %v", ll.size)
+	}
+
+	err = ll.Remove(-1)
 	if err == nil {
 		t.Errorf("err should be ErrOutOfBounds is %v", err)
 	}
